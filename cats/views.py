@@ -16,9 +16,13 @@ class CatViewSet(viewsets.ModelViewSet):
     throttle_classes = (AnonRateThrottle,)
     # throttle_scope = 'low_request'
     pagination_class = CatsPagination
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_backends = (
+        DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter
+    )
     filterset_fields = ('color', 'birth_year')
     search_fields = ('name', 'owner__username')
+    ordering_fields = ('name', 'birth_year')
+    ordering = ('birth_year',)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
