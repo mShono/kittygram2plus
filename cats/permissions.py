@@ -12,7 +12,7 @@ class OwnerOrReadOnly(permissions.BasePermission):
         # return obj.owner == request.user
         return (
             request.method in permissions.SAFE_METHODS
-            or request.user.is_authenticated
+            or obj.owner == request.user
         )
 
 
