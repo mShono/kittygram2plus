@@ -10,8 +10,8 @@ class CatViewSet(viewsets.ModelViewSet):
     queryset = Cat.objects.all()
     serializer_class = CatSerializer
     permission_classes = (OwnerOrReadOnly,)
-    # throttle_classes = (AnonRateThrottle,)
-    throttle_scope = 'low_request' 
+    throttle_classes = (AnonRateThrottle,)
+    # throttle_scope = 'low_request'
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
