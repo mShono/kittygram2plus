@@ -1,5 +1,6 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
-from rest_framework.pagination import LimitOffsetPagination 
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.throttling import AnonRateThrottle
 
 from .models import Achievement, Cat, User
@@ -15,6 +16,8 @@ class CatViewSet(viewsets.ModelViewSet):
     throttle_classes = (AnonRateThrottle,)
     # throttle_scope = 'low_request'
     pagination_class = CatsPagination
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('color', 'birth_year')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
